@@ -1,0 +1,22 @@
+{
+  "name": "@sevenspice/warbler",
+  "version": "1.0.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sevenspice/Warbler"
+  },
+  "private": true,
+  "description": "Library that performs Twitter OAuth authentication with Node.js",
+  "engines": {
+    "node": ">=8.1.3"
+  },
+  "devDependencies": {
+    "chai": "^4.0.2",
+    "gulp": "^3.9.1",
+    "gulp-mocha": "^4.3.1",
+    "mocha": "^3.4.2",
+    "run-sequence": "^1.2.2",
+    "sinon": "^2.3.6"
+  }
+}
