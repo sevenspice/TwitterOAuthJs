@@ -30,7 +30,7 @@ var consumer_key        = '7TrtNCAdrFounnGuensSQ1a6p';
 var consumer_secret     = 'TWWdXzcbsQICL2NotMcIcPxcLDsl7siIwbpaggVU2KcxWk6mgB';
 var access_token        = '899784073-dMcVAnBjdn1TTZ4t1nY6vMZBf8ISKB0FhKWBeOzZ';
 var access_token_secret = 'bNHFjslVpXFN6MB4kW7OuhRQ2ZJ1IaBSztXmgm4Z9a0DC';
-var options   = {q:'#ペリーヌ物語', locale:'ja'}
+var options   = {q:'#ペリーヌ物語', locale:'ja'};
 var timeout   = 10000;
 var timestamp = Math.round((new Date()).getTime() / 1000);
 
