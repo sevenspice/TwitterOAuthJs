@@ -107,7 +107,7 @@ class Warbler {
      */
     getOptionsUrlEncoded () {
 
-        var queries = {};
+        const queries = {};
 
         for(const key in this.getOptions()){
             queries[key] = encodeURIComponent(this.getOptions()[key]);
@@ -156,13 +156,13 @@ class Warbler {
      */
     getAuthString (timestamp, nonce) {
 
-        var auth = 'OAuth ';
+        let auth = 'OAuth ';
 
         // 署名を取得
-        var signature = this.sign(this.getSignatureString(timestamp, nonce));
+        const signature = this.sign(this.getSignatureString(timestamp, nonce));
 
         // 署名をクエリーオブジェクトに追加
-        var map = this.getQueryMap(timestamp, nonce, signature);
+        const map = this.getQueryMap(timestamp, nonce, signature);
 
         for(const key in map){
             auth += `${key}="${encodeURIComponent(map[key])}", `;
@@ -181,7 +181,7 @@ class Warbler {
      */
     sign (target) {
 
-        var crypto = require('crypto');
+        const crypto = require('crypto');
         return crypto.createHmac('sha1', this.getSecretKey()).update(target).digest("base64");
 
     }
@@ -195,9 +195,9 @@ class Warbler {
      */
     getSignatureString (timestamp, nonce) {
 
-        var url  = `${this.getScheme()}://${this.getHost()}${this.getEntryPoint()}`;
-        var base = `${this.getProtocol()}&${encodeURIComponent(url)}&`;
-        var map  = this.getQueryMap(timestamp, nonce);
+        const url = `${this.getScheme()}://${this.getHost()}${this.getEntryPoint()}`;
+        const map = this.getQueryMap(timestamp, nonce);
+        let base  = `${this.getProtocol()}&${encodeURIComponent(url)}&`;
 
         for(const key in map){
             base += encodeURIComponent((key + '=' + map[key] + '&'));
@@ -217,7 +217,7 @@ class Warbler {
      */
     getQueryMap (timestamp, nonce, signature = '') {
 
-        var parameters = {
+        const parameters = {
 
             'oauth_token':        this.getAccessToken(),
             'oauth_consumer_key': this.getConsumerKey(),
@@ -244,10 +244,10 @@ class Warbler {
      */
     getNonce () {
 
-        var nonce = '';
-        var digit = (Warbler.CODE_TABLE.length * 2);
+        let   nonce = '';
+        const digit = (Warbler.CODE_TABLE.length * 2);
 
-        for(var i=0; i<digit; i++){
+        for(let i=0; i<digit; i++){
             nonce += Warbler.CODE_TABLE.charAt(Math.floor((Math.random() * Warbler.CODE_TABLE.length)));
         }
 
@@ -261,8 +261,8 @@ class Warbler {
      */
     sortMapByAsc (object) {
 
-        var sorted = {};
-        var keys   = [];
+        const sorted = {};
+        const keys   = [];
  
         // 引数に渡されたオブジェクトのキーのみを取り出す
         for(const key in object){
@@ -273,7 +273,7 @@ class Warbler {
         keys.sort();
 
         // 再格納
-        for(var i=0; i< keys.length; i++){
+        for(let i=0; i< keys.length; i++){
             sorted[keys[i]] = object[keys[i]];
         }
 

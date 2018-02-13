@@ -1,21 +1,20 @@
 'use strict';
 
-var fs      = require('fs');
-var chai    = require('chai');
-var assert  = chai.assert;
-var Warbler = require(`${__dirname}/../main/warbler`);
+const chai    = require('chai');
+const assert  = chai.assert;
+const Warbler = require(`${__dirname}/../main/warbler`);
 
 describe('Warbler class test', () => {
 
-    var scheme              = 'https';
-    var host                = 'api.twitter.com';
-    var entry_point         = '/1.1/search/tweets.json';
-    var protocol            = 'GET';
-    var consumer_key        = 'v0s9tO9WrMHh3yEnhqPujKSag1v6VMIc';
-    var consumer_secret     = 'jr7HtnJF1VJN7iG65ibMNh13H2kaLqZ9';
-    var access_token        = '8aGkj7x720sxrixbCi0KFilOysGmXSgI';
-    var access_token_secret = 'mSBi1SW73czsajiCxVhHQ4jPHx9fEIqQ';
-    var warbler             = null;
+    const scheme              = 'https';
+    const host                = 'api.twitter.com';
+    const entry_point         = '/1.1/search/tweets.json';
+    const protocol            = 'GET';
+    const consumer_key        = 'v0s9tO9WrMHh3yEnhqPujKSag1v6VMIc';
+    const consumer_secret     = 'jr7HtnJF1VJN7iG65ibMNh13H2kaLqZ9';
+    const access_token        = '8aGkj7x720sxrixbCi0KFilOysGmXSgI';
+    const access_token_secret = 'mSBi1SW73czsajiCxVhHQ4jPHx9fEIqQ';
+    let warbler = null;
 
     before( () => {});
 
@@ -26,7 +25,7 @@ describe('Warbler class test', () => {
 
     it('instance', () => {
 
-        var options = {q:'twitter', locale:'ja'};
+        const options = {q:'twitter', locale:'ja'};
 
         // 引数をすべて指定してインスタンス化
         warbler = new Warbler(
@@ -90,7 +89,7 @@ describe('Warbler class test', () => {
     it('getOptionsUrlEncoded', () => {
 
         warbler.setOptions({status:"艦これ"});
-        var options = warbler.getOptionsUrlEncoded();
+        const options = warbler.getOptionsUrlEncoded();
 
         assert.equal('%E8%89%A6%E3%81%93%E3%82%8C', options['status']);
 
@@ -99,19 +98,19 @@ describe('Warbler class test', () => {
     it('getAuthString', () => {
 
         // 返却されるはずの文字列
-        var comparison = `OAuth oauth_consumer_key="6TrtNCAdrFounnGuensSQ1a6a", oauth_nonce="372cb60308b5f0479cda91149db21022", oauth_signature="zLDk31PcF6bXPVhy1LaR%2FLkD8zs%3D", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1505374547", oauth_token="822787074-eNcVAnBjdn1TTZ4t1nY6vMZBf8ISKB0FhKWBeOzX", oauth_version="1.0", status="%25E8%2589%25A6%25E3%2581%2593%25E3%2582%258C"`;
+        const comparison = `OAuth oauth_consumer_key="6TrtNCAdrFounnGuensSQ1a6a", oauth_nonce="372cb60308b5f0479cda91149db21022", oauth_signature="zLDk31PcF6bXPVhy1LaR%2FLkD8zs%3D", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1505374547", oauth_token="822787074-eNcVAnBjdn1TTZ4t1nY6vMZBf8ISKB0FhKWBeOzX", oauth_version="1.0", status="%25E8%2589%25A6%25E3%2581%2593%25E3%2582%258C"`;
 
-        var protocol            = 'POST';
-        var entry_point         = '/1.1/statuses/update.json';
-        var consumer_key        = '6TrtNCAdrFounnGuensSQ1a6a';
-        var consumer_secret     = 'TWWdXzvbsQICL2NotMcIcPxcLDsl7siIwbpaggVU2KcxWk6mgI';
-        var access_token        = '822787074-eNcVAnBjdn1TTZ4t1nY6vMZBf8ISKB0FhKWBeOzX';
-        var access_token_secret = 'bNHFjslVpXFN6MB4kW7OuhRQ2ZJ1IaBSztXmgm4Z9a0PC';
-        var timestamp           = '1505374547';
-        var nonce               = '372cb60308b5f0479cda91149db21022';
-        var options             = {status:"艦これ"};
+        const protocol            = 'POST';
+        const entry_point         = '/1.1/statuses/update.json';
+        const consumer_key        = '6TrtNCAdrFounnGuensSQ1a6a';
+        const consumer_secret     = 'TWWdXzvbsQICL2NotMcIcPxcLDsl7siIwbpaggVU2KcxWk6mgI';
+        const access_token        = '822787074-eNcVAnBjdn1TTZ4t1nY6vMZBf8ISKB0FhKWBeOzX';
+        const access_token_secret = 'bNHFjslVpXFN6MB4kW7OuhRQ2ZJ1IaBSztXmgm4Z9a0PC';
+        const timestamp           = '1505374547';
+        const nonce               = '372cb60308b5f0479cda91149db21022';
+        const options             = {status:"艦これ"};
 
-        var w = new Warbler(
+        const w = new Warbler(
 
             scheme, host, entry_point, protocol, consumer_key
             ,consumer_secret, access_token, access_token_secret
@@ -119,7 +118,7 @@ describe('Warbler class test', () => {
 
             );
 
-        var result = w.getAuthString(timestamp, nonce);
+        const result = w.getAuthString(timestamp, nonce);
 
         assert.equal(comparison, result);
 
@@ -127,14 +126,14 @@ describe('Warbler class test', () => {
 
     it('sign', () => {
 
-        var target = 'Hello World';
-        var key    = 'secret';
+        const target = 'Hello World';
+        const key    = 'secret';
 
-        var w = new Warbler(
+        const w = new Warbler(
             scheme, host, entry_point, protocol, consumer_key
             ,key, access_token, '' ); 
 
-        var result = w.sign(target);
+        const result = w.sign(target);
         assert.equal("Rn0mSLYlmbiWaLspobTbLILIkZs=", result);
 
     });
@@ -142,17 +141,17 @@ describe('Warbler class test', () => {
     it('getSignatureString', () => {
 
         // 返却されるはずの文字列
-        var comparison = "POST&https%3A%2F%2Fapi.twitter.com%2F1.1%2Fstatuses%2Fupdate.json&oauth_consumer_key%3Dxvz1evFS4wEEPTGEFPHBog%26oauth_nonce%3DkYjzVBB8Y0ZFabxSWbWovY3uYSQ2pTgmZeNu2VS4cg%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1318622958%26oauth_token%3D370773112-GmHxMAgYyLbNEtIKZeRNFsMKPR9EyMZeS9weJAEb%26oauth_version%3D1.0%26status%3D%25E8%2589%25A6%25E3%2581%2593%25E3%2582%258C";
+        const comparison = "POST&https%3A%2F%2Fapi.twitter.com%2F1.1%2Fstatuses%2Fupdate.json&oauth_consumer_key%3Dxvz1evFS4wEEPTGEFPHBog%26oauth_nonce%3DkYjzVBB8Y0ZFabxSWbWovY3uYSQ2pTgmZeNu2VS4cg%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1318622958%26oauth_token%3D370773112-GmHxMAgYyLbNEtIKZeRNFsMKPR9EyMZeS9weJAEb%26oauth_version%3D1.0%26status%3D%25E8%2589%25A6%25E3%2581%2593%25E3%2582%258C";
 
-        var protocol     = 'POST';
-        var entry_point  = '/1.1/statuses/update.json';
-        var consumer_key = 'xvz1evFS4wEEPTGEFPHBog';
-        var access_token = '370773112-GmHxMAgYyLbNEtIKZeRNFsMKPR9EyMZeS9weJAEb';
-        var nonce        = 'kYjzVBB8Y0ZFabxSWbWovY3uYSQ2pTgmZeNu2VS4cg';
-        var timestamp    = '1318622958';
-        var options      = {status:"艦これ"};
+        const protocol     = 'POST';
+        const entry_point  = '/1.1/statuses/update.json';
+        const consumer_key = 'xvz1evFS4wEEPTGEFPHBog';
+        const access_token = '370773112-GmHxMAgYyLbNEtIKZeRNFsMKPR9EyMZeS9weJAEb';
+        const nonce        = 'kYjzVBB8Y0ZFabxSWbWovY3uYSQ2pTgmZeNu2VS4cg';
+        const timestamp    = '1318622958';
+        const options      = {status:"艦これ"};
 
-        var w = new Warbler(
+        const w = new Warbler(
 
             scheme, host, entry_point, protocol, consumer_key
             ,consumer_secret, access_token, access_token_secret
@@ -160,7 +159,7 @@ describe('Warbler class test', () => {
 
             ); 
 
-        var result = w.getSignatureString(timestamp, nonce);
+        const result = w.getSignatureString(timestamp, nonce);
 
         assert.equal(comparison, result);
 
@@ -169,13 +168,13 @@ describe('Warbler class test', () => {
 
     it('getNonce', () => {
 
-        var nonce = warbler.getNonce();
+        const nonce = warbler.getNonce();
 
         // 32桁であること
         assert.equal(32, nonce.length);
 
-        var nonce1 = warbler.getNonce();
-        var nonce2 = warbler.getNonce();
+        const nonce1 = warbler.getNonce();
+        const nonce2 = warbler.getNonce();
 
         // 同じ文字列が作成されないこと
         assert.notEqual(nonce1, nonce2);
@@ -185,13 +184,13 @@ describe('Warbler class test', () => {
 
     it('getQueryMap', () => {
 
-        var nonce = warbler.getNonce();
-        var timestamp = Math.round((new Date()).getTime() / 1000);
-        var signature = 'abcdefghjklmnopq';
-        var keys = [];
-        
+        const nonce = warbler.getNonce();
+        const timestamp = Math.round((new Date()).getTime() / 1000);
+        const signature = 'abcdefghjklmnopq';
+        let keys = [];
+
         warbler.setOptions({q:'twitter', locale:'ja'});
-        var map = warbler.getQueryMap(timestamp, nonce, signature);
+        let map = warbler.getQueryMap(timestamp, nonce, signature);
 
         // 要素数は9
         assert.equal(9, Object.keys(map).length);
@@ -257,9 +256,9 @@ describe('Warbler class test', () => {
 
     it('sortMapByAsc', () => {
 
-        var sample = { ringo:"apple", budou: "grape", kaki:"persimmon", akebi: "chocolate vine"};
-        var sorted = warbler.sortMapByAsc(sample);
-        var keys   = [];
+        const sample = { ringo:"apple", budou: "grape", kaki:"persimmon", akebi: "chocolate vine"};
+        const sorted = warbler.sortMapByAsc(sample);
+        const keys   = [];
 
         for(const key in sorted){
             keys.push(key);
