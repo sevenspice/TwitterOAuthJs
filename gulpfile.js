@@ -1,16 +1,15 @@
 'use strict';
 
-var gulp  = require('gulp');
-var mocha = require('gulp-mocha');
-var runSequence = require('run-sequence');
+const gulp  = require('gulp');
+const mocha = require('gulp-mocha');
 
 // 定数
-var SOURCE_DIR = `${__dirname}/sources`;
+const SOURCE_DIR = `${__dirname}/sources`;
 
 /**
  * テスト実行
  */
-gulp.task('mocha', function(){
+gulp.task('mocha', () => {
     return gulp.src([`${SOURCE_DIR}/spec/**/*.js`], { read: false })
         .pipe(mocha({ reporter: 'list'}));
 });
@@ -18,6 +17,4 @@ gulp.task('mocha', function(){
 /**
  * テスト実行
  */
-gulp.task('test', function(callback){
-    runSequence('mocha', callback);
-});
+gulp.task('test', gulp.series('mocha'));
