@@ -115,7 +115,7 @@ const consumer_key        = 'コンシューマーキー';
 const consumer_secret     = 'コンシューマーシークレット';
 const access_token        = 'アクセストークン';
 const access_token_secret = 'アクセストークンシークレット';
-// options には DMに対応した JSON オブジェクトを指定する
+// options には DM に対応した JSON オブジェクトを指定する
 const options   = { event: { type: "message_create", message_create: { target: { recipient_id: "USER_ID" } , message_data: { text: 'すごーい！' } } } };
 const timeout   = 10000;
 const timestamp = Math.round((new Date()).getTime() / 1000);
