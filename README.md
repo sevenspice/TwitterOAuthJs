@@ -1,6 +1,6 @@
 # 概要
 
-OAuth認証に必要なパラメーターを作成するライブラリ。
+OAuth 認証に必要な Authorization シグネチャを作成するライブラリ。
 
 # 必要条件
 
@@ -19,7 +19,7 @@ OAuth認証に必要なパラメーターを作成するライブラリ。
 | :-----------: |
 | `1.0`         |
 
-## 対応 API
+## 対応API
 
 * Twitter API
 
@@ -41,6 +41,7 @@ npm install
 touch index.js
 vi index.js
 ```
+
 ファイルに下記をコピーアンドペースト。
 * コンシューマーキー、コンシューマーシークレット、アクセストークン、アクセストークンシークレットは適宜変更すること。
 ``` javascript
@@ -94,4 +95,100 @@ Request.get({
 スクリプトを実行。
 ```
 node index.js
+```
+
+# Direct Messageについて
+
+Direct Message では若干他のAPIと仕様が若干異なるため注意が必要。以下に送信例を示す。
+* [Sending and receiving events](https://developer.twitter.com/en/docs/direct-messages/sending-and-receiving/overview)
+
+送信コード例
+``` javascript
+const Warbler = require('@sevenspice/warbler');
+const Request = require('request');
+
+const scheme              = 'https';
+const host                = 'api.twitter.com';
+const entry_point         = '/1.1/direct_messages/events/new.json';
+const protocol            = 'POST';
+const consumer_key        = 'コンシューマーキー';
+const consumer_secret     = 'コンシューマーシークレット';
+const access_token        = 'アクセストークン';
+const access_token_secret = 'アクセストークンシークレット';
+// options には DMに対応した JSON オブジェクトを指定する
+const options   = { event: { type: "message_create", message_create: { target: { recipient_id: "USER_ID" } , message_data: { text: 'すごーい！' } } } };
+const timeout   = 10000;
+const timestamp = Math.round((new Date()).getTime() / 1000);
+
+const walber = new Warbler(
+    scheme
+    , host
+    , entry_point
+    , protocol
+    , consumer_key
+    , consumer_secret
+    , access_token
+    , access_token_secret
+    , options, timeout
+);
+
+const getResponse = (_, __, body) => {
+    console.log(body);
+};
+
+request = Request.post({
+    url: `${walber.getScheme()}://${walber.getHost()}${walber.getEntryPoint()}`,
+    json: walber.getOptions(), // HTTP 通信に request パッケージを使用している場合は、qs ではなく json を指定する
+    headers: {
+        'Authorization':  walber.getAuthString(timestamp, walber.getNonce())
+        , 'content-type': 'application/json' // application/x-www-form-urlencoded ではなく application/json を指定する
+    },
+}, getResponse);
+
+```
+* `recipient_id`は送りたいユーザーのIDを指定する。
+* ユーザーのIDはエントリポイントの`/1.1/users/show.json`を使用して調べることができる。
+    * [GET users/show](https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-users-show)
+
+取得コード例
+``` javascript
+const Warbler = require('@sevenspice/warbler');
+const Request = require('request');
+
+const scheme              = 'https';
+const host                = 'api.twitter.com';
+const entry_point         = '/1.1/direct_messages/events/list.json';
+const protocol            = 'GET';
+const consumer_key        = 'コンシューマーキー';
+const consumer_secret     = 'コンシューマーシークレット';
+const access_token        = 'アクセストークン';
+const access_token_secret = 'アクセストークンシークレット';
+const options   = {};
+const timeout   = 10000;
+const timestamp = Math.round((new Date()).getTime() / 1000);
+
+const walber = new Warbler(
+    scheme
+    , host
+    , entry_point
+    , protocol
+    , consumer_key
+    , consumer_secret
+    , access_token
+    , access_token_secret
+    , options, timeout
+);
+
+const getResponse = (_, __, body) => {
+    console.log(body);
+};
+
+request = Request.get({
+    url: `${walber.getScheme()}://${walber.getHost()}${walber.getEntryPoint()}`,
+    headers: {
+        'Authorization':  walber.getAuthString(timestamp, walber.getNonce())
+        , 'content-type': 'application/json'
+    },
+}, getResponse);
+
 ```

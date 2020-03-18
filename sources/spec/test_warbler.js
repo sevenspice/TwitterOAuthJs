@@ -252,6 +252,32 @@ describe('Warbler class test', () => {
         assert.equal('1.0',        map[keys[6]]);
         assert.equal('twitter',    map[keys[7]]);
 
+        // DM対応
+        // DMのエントリポイントを指定されている場合はJSONはクエリーパラメーターに含めない
+        const w = new Warbler(
+            scheme
+            ,host
+            ,'/1.1/direct_messages/events/new.json'
+            ,'POST'
+            ,consumer_key
+            ,consumer_secret
+            ,access_token
+            ,access_token_secret
+            ,{event: {type: "message_create", message_create: {target: {recipient_id: "822787074"} , message_data: {text: 'Hello,World'}}}}
+            ,10000
+        );
+
+        keys = [];
+        map = w.getQueryMap(timestamp, nonce);
+
+        for(const key in map){
+            keys.push(key);
+        }
+
+        // JSONのキーが含まれていないこと
+        assert.isFalse(keys.includes('type'));
+        assert.isFalse(keys.includes('message_create'));
+
     });
 
     it('sortMapByAsc', () => {

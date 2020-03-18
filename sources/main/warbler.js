@@ -148,6 +148,13 @@ class Warbler {
     }
 
     /**
+     * クラス定数
+     */
+    static get DIRECT_MESSAGE_REGULAR_EXPRESSION () {
+        return '/direct_messages/';
+    }
+
+    /**
      * 認証に使用する文字列を生成して返却する
      * @param {string} timestamp 送信時のタイムスタンプ値
      * @param {string} nonce     ランダム文字列
@@ -225,8 +232,12 @@ class Warbler {
 
         };
 
-        for(const key in this.getOptions()){
-            parameters[key] = encodeURIComponent(this.getOptions()[key]);
+        // DM対応
+        // DM時にはクエリをパラメーターに加えない
+        if( ! this.getEntryPoint().match(Warbler.DIRECT_MESSAGE_REGULAR_EXPRESSION)){
+            for(const key in this.getOptions()){
+                parameters[key] = encodeURIComponent(this.getOptions()[key]);
+            }
         }
 
         // 署名追加
