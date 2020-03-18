@@ -42,7 +42,7 @@ touch index.js
 vi index.js
 ```
 ファイルに下記をコピーアンドペースト。
-※ コンシューマーキー、コンシューマーシークレット、アクセストークン、アクセストークンシークレットは適宜変更すること。
+* コンシューマーキー、コンシューマーシークレット、アクセストークン、アクセストークンシークレットは適宜変更すること。
 ``` javascript
 const Warbler = require('@sevenspice/warbler');
 const Request = require('request');
