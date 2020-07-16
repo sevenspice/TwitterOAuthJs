@@ -1,6 +1,6 @@
 # 概要
 
-OAuth 認証に必要な Authorization シグネチャを作成するライブラリ。
+OAuth認証に必要なAuthorizationシグネチャを作成するライブラリ。
 
 # 必要条件
 
@@ -25,7 +25,7 @@ OAuth 認証に必要な Authorization シグネチャを作成するライブ�
 
 # スタートガイド
 
-`package.json` の `dependencies` に以下２つの項目をを追記する。
+`package.json`の`dependencies`に以下２つの項目をを追記する。
 ```
 "@sevenspice/warbler": "https://github.com/sevenspice/Warbler.git",
 "request": "^2.88.0"
@@ -99,7 +99,7 @@ node index.js
 
 # Direct Messageについて
 
-Direct Message では若干他のAPIと仕様が若干異なるため注意が必要。以下に送信例を示す。
+Direct Messageでは若干他のAPIと仕様が若干異なるため注意が必要。以下に送信例を示す。
 * [Sending and receiving events](https://developer.twitter.com/en/docs/direct-messages/sending-and-receiving/overview)
 
 送信コード例
