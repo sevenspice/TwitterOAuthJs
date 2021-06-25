@@ -35,6 +35,10 @@ OAuth認証に必要なAuthorizationシグネチャを作成するライブラ�
 ```
 npm install
 ```
+※ インストールに失敗する場合は以下も試す。
+```
+npm install --ignore-scripts
+```
 
 ツイートを検索する場合のソースコード例。
 ```
